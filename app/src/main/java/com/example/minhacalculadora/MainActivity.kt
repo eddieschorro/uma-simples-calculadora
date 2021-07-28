@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.ArithmeticException
+import kotlin.ArithmeticException
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,23 +57,45 @@ class MainActivity : AppCompatActivity() {
                 if (conteudoTvText.startsWith("-")) {
                     prefix = "-"
                     conteudoTvText = conteudoTvText.substring(1)
-
                 }
 
                 if (tv_input.text.contains("-")) {
-
                     val split = conteudoTvText.split("-")
-
                     var ladoEsquerdoDaConta = split[0]
                     var ladoDireiroDaConta = split[1]
-
                     if (!prefix.isEmpty()) {
                         ladoEsquerdoDaConta = prefix + ladoEsquerdoDaConta
                     }
-
                     tv_input.text =
-                        (ladoEsquerdoDaConta.toInt() - ladoDireiroDaConta.toInt()).toString()
+                        removeUglyZeroes((ladoEsquerdoDaConta.toDouble() - ladoDireiroDaConta.toDouble()).toString())
 
+                } else if (tv_input.text.contains("+")) {
+                    val split = conteudoTvText.split("+")
+                    var ladoEsquerdoDaConta = split[0]
+                    var ladoDireiroDaConta = split[1]
+                    if (!prefix.isEmpty()) {
+                        ladoEsquerdoDaConta = prefix + ladoEsquerdoDaConta
+                    }
+                    tv_input.text =
+                        removeUglyZeroes((ladoEsquerdoDaConta.toDouble() + ladoDireiroDaConta.toDouble()).toString())
+                } else if (tv_input.text.contains("/")) {
+                    val split = conteudoTvText.split("/")
+                    var ladoEsquerdoDaConta = split[0]
+                    var ladoDireiroDaConta = split[1]
+                    if (!prefix.isEmpty()) {
+                        ladoEsquerdoDaConta = prefix + ladoEsquerdoDaConta
+                    }
+                    tv_input.text =
+                        removeUglyZeroes((ladoEsquerdoDaConta.toDouble() / ladoDireiroDaConta.toDouble()).toString())
+                } else if (tv_input.text.contains("*")) {
+                    val split = conteudoTvText.split("*")
+                    var ladoEsquerdoDaConta = split[0]
+                    var ladoDireiroDaConta = split[1]
+                    if (!prefix.isEmpty()) {
+                        ladoEsquerdoDaConta = prefix + ladoEsquerdoDaConta
+                    }
+                    tv_input.text =
+                        removeUglyZeroes((ladoEsquerdoDaConta.toDouble() * ladoDireiroDaConta.toDouble()).toString())
                 }
             } catch (e: ArithmeticException) {
                 e.stackTrace
@@ -90,5 +112,14 @@ class MainActivity : AppCompatActivity() {
                 "-"
             )
         }
+    }
+
+    // format results to remove zeroes. then its passed in the final result
+    private fun removeUglyZeroes(resultadoExibidoNaTela: String): String {
+        var valorzinho: String = resultadoExibidoNaTela
+        if (resultadoExibidoNaTela.contains(".0")) {
+            valorzinho = resultadoExibidoNaTela.substring(0, resultadoExibidoNaTela.length - 2)
+        }
+        return valorzinho
     }
 }

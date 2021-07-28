@@ -11,8 +11,10 @@
         android:id="@+id/tv_input"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:fontFamily="casual"
-        android:gravity="right|top|left"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="bottom|right"
+        android:padding="10dp"
+        android:maxLength="10"
         android:textSize="34sp"
         android:textStyle="bold" />
 
